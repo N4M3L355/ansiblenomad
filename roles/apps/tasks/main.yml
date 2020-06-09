@@ -1,0 +1,98 @@
+---
+
+- name: Ensure nongui things
+  become: yes
+  tags: ['prerequisites','install', 'nongui']
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - zsh
+      - terminator
+      - curl
+      - git
+      - speedtest-cli
+      - terminator
+      - htop
+      - ubuntu-make
+      - gir1.2-gtop-2.0
+      - gir1.2-nm-1.0
+      - gir1.2-clutter-1.0
+      - build-essential
+      - powertop
+      - xdotool
+      - xclip
+      - lsp-plugins
+
+- name: Ensure gui things
+  become: yes
+  tags: ['prerequisites','install', 'gui']
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - gnome-tweaks
+      - chrome-gnome-shell
+      - audacity
+      - vlc
+      - deluge
+      - kdeconnect
+      - gnome-shell-extension-dash-to-panel
+      - gnome-shell-extension-system-monitor
+      - pulseeffects
+      - inkscape
+      - gimp
+      - krita
+      - torbrowser-launcher
+      - slack
+      - audacity
+
+- name: Snaps classic
+  become: yes
+  tags: ['install', 'gui']
+  snap:
+    classic: yes
+    name:
+      - webstorm
+      - pycharm-professional
+
+- name: Snaps nonclassic
+  become: yes
+  tags: ['install', 'gui']
+  snap:
+    classic: yes
+    name:
+      - spotify
+
+- name: activate dash to panel gnome extension
+  raw: gnome-extensions enable dash-to-panel@jderose9.github.com
+
+- name: activate gnome system monitor extension
+  raw: gnome-extensions enable system-monitor@paradoxxx.zero.gmail.com
+
+
+- name: favorite apps in dash
+  raw: gsettings set org.gnome.shell favorite-apps "['webstorm_webstorm.desktop', 'spotify_spotify.desktop', 'com.github.wwmm.pulseeffects.desktop', 'firefox-developer.desktop', 'google-chrome.desktop', 'gnome-system-monitor.desktop', 'slack_slack.desktop']"
+
+
+- name: workspace not only on primary
+  raw: gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
+
+
+# firefox dev
+# nodejs
+# sshkeys
+# virtualbox
+# rescuetime
+# git config
+# zsh config
+# webstorm config?
+# shortcuts keyboard
+# firefox sync
+# vpn
+# rsync
+# hideclock
+
+

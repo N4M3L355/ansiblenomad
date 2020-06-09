@@ -1,0 +1,4 @@
+ssh-keygen -f "/home/undefined/.ssh/known_hosts" -R "10.3.100.231"
+ssh-keygen -f "/home/undefined/.ssh/known_hosts" -R "10.3.100.232"
+ssh-keygen -f "/home/undefined/.ssh/known_hosts" -R "10.3.100.233"
+

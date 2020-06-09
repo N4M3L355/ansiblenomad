@@ -1,0 +1,10 @@
+#!/bin/bash
+vboxmanage controlvm '1' poweroff
+vboxmanage controlvm '2' poweroff
+vboxmanage controlvm '3' poweroff
+vboxmanage snapshot '1' restore "231"
+vboxmanage snapshot '2' restore "232"
+vboxmanage snapshot '3' restore "233"
+vboxmanage startvm '1' --type headless &
+vboxmanage startvm '2' --type headless &
+vboxmanage startvm '3' --type headless

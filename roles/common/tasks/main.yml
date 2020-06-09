@@ -1,0 +1,61 @@
+---
+
+- name: Add universe
+  become: yes
+  tags:  ['prerequisites','install']
+  apt_repository:
+    repo: "deb [arch=amd64] http://archive.ubuntu.com/ubuntu {{ansible_lsb.codename}} universe"
+    update_cache: yes
+
+- name: Ensure apt-transport-https, software-properties-common, ca-certificates, curl, docker.io, python3-pip
+  become: yes
+  tags: ['prerequisites','install']
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+    - apt-transport-https
+    - software-properties-common
+    - ca-certificates
+    - curl
+    - docker.io
+    - python3-pip
+
+- name: remove docker-py
+  tags: ['prerequisites','install']
+  pip:
+    name: docker-py
+    state: absent
+  ignore_errors: yes
+
+
+
+- name: Install docker python module
+  tags: ['prerequisites','install']
+  pip:
+    name: "docker"
+
+- name: Create the docker group.
+  tags: ['prerequisites','install']
+  group:
+    name: docker
+    state: present
+
+- name: Add your user to the docker group.
+  tags: ['prerequisites','install']
+  become: yes
+  register: user_task
+  user:
+    name: "{{ ansible_user_id }}"
+    append: yes
+    groups: docker
+
+- name: Remove cp dir to force ssh reconnection.
+  tags: ['prerequisites','install']
+  file:
+    path: ~/.ansible/cp
+    state: absent
+  delegate_to: localhost
+  changed_when: false
+

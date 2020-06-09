@@ -1,0 +1,16 @@
+---
+- name: necessary updates
+  hosts: all
+  gather_facts: False
+  roles:
+  - precommon
+
+- name: Install prerequisities
+  hosts: stations
+  roles:
+  - common
+
+- name: Install apps
+  hosts: stations
+  roles:
+  - apps
