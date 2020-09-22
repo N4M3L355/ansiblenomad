@@ -1,5 +1,10 @@
 ---
 
+
+- name: nodejs repository and setup
+  raw: curl -sL https://deb.nodesource.com/setup_14.x | bash
+  become: yes
+
 - name: Ensure nongui things
   become: yes
   tags: ['prerequisites','install', 'nongui']
@@ -24,6 +29,7 @@
       - xdotool
       - xclip
       - lsp-plugins
+      - nodejs
 
 - name: Ensure gui things
   become: yes
@@ -42,7 +48,6 @@
       - gnome-shell-extension-dash-to-panel
       - gnome-shell-extension-system-monitor
       - pulseeffects
-      - inkscape
       - gimp
       - krita
       - torbrowser-launcher
@@ -51,7 +56,7 @@
 
 - name: Snaps classic
   become: yes
-  tags: ['install', 'gui']
+  tags: ['install', 'gui', 'snap']
   snap:
     classic: yes
     name:
@@ -60,11 +65,29 @@
 
 - name: Snaps nonclassic
   become: yes
-  tags: ['install', 'gui']
+  tags: ['install', 'gui', 'snap']
   snap:
-    classic: yes
+    classic: no
     name:
       - spotify
+
+- name: Add the flathub flatpak repository remote to the user installation
+  tags: [ 'install', 'gui', 'flatpak' ]
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: spotify flatpak
+  tags: [ 'install', 'gui', 'flatpak' ]
+  flatpak:
+    name: com.spotify.Client
+
+- name: flatpaks
+  tags: [ 'install', 'gui', 'flatpak' ]
+  flatpak:
+    name: com.jetbrains.WebStorm
 
 - name: activate dash to panel gnome extension
   raw: gnome-extensions enable dash-to-panel@jderose9.github.com
@@ -81,18 +104,21 @@
   raw: gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 
 
-# firefox dev
+
+
+# firefox dev
 # nodejs
+# pulseefects
+# flatpak
 # sshkeys
 # virtualbox
 # rescuetime
 # git config
-# zsh config
+# zsh config+spaceship
 # webstorm config?
 # shortcuts keyboard
-# firefox sync
+# firefox sync
 # vpn
 # rsync
-# hideclock
 
 

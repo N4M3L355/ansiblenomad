@@ -1,8 +1,9 @@
 [stations]
 # 10.3.100.231 ansible_user=undefined ansible_ssh_pass=koberec ansible_sudo_pass=koberec
-10.3.100.24 ansible_user=undefined ansible_ssh_pass=koberec ansible_sudo_pass=koberec
+# 10.3.100.24 ansible_user=undefined ansible_ssh_pass=koberec ansible_sudo_pass=koberec
+localhost ansible_user=undefined ansible_ssh_pass=Surprise ansible_sudo_pass=Surprise
 
 [db]
-10.3.100.231 ansible_user=undefined ansible_ssh_pass=koberec ansible_sudo_pass=koberec
+# 10.3.100.231 ansible_user=undefined ansible_ssh_pass=koberec ansible_sudo_pass=koberec
 
 [loadbalancer]
