@@ -2,7 +2,7 @@
 
 - name: Add universe
   become: yes
-  tags:  ['prerequisites','install']
+  tags:  ['prerequisites','install', 'universe']
   apt_repository:
     repo: "deb [arch=amd64] http://archive.ubuntu.com/ubuntu {{ansible_lsb.codename}} universe"
     update_cache: yes

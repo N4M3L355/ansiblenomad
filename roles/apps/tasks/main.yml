@@ -30,6 +30,7 @@
       - xclip
       - lsp-plugins
       - nodejs
+      - fonts-powerline
 
 - name: Ensure gui things
   become: yes
@@ -90,17 +91,21 @@
     name: com.jetbrains.WebStorm
 
 - name: activate dash to panel gnome extension
+  tags: [ 'gnome' ]
   raw: gnome-extensions enable dash-to-panel@jderose9.github.com
 
 - name: activate gnome system monitor extension
+  tags: [ 'gnome' ]
   raw: gnome-extensions enable system-monitor@paradoxxx.zero.gmail.com
 
 
 - name: favorite apps in dash
+  tags: [ 'gnome' ]
   raw: gsettings set org.gnome.shell favorite-apps "['webstorm_webstorm.desktop', 'spotify_spotify.desktop', 'com.github.wwmm.pulseeffects.desktop', 'firefox-developer.desktop', 'google-chrome.desktop', 'gnome-system-monitor.desktop', 'slack_slack.desktop']"
 
 
 - name: workspace not only on primary
+  tags: [ 'gnome' ]
   raw: gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 
 - name: copy firefox desktop entry
@@ -110,13 +115,45 @@
   tags: ['firefox-dev', 'install']
 
 
+- name: Create a directory if it does not exist
+  file:
+    path: ~/.local/opt/
+    state: directory
+  tags: [ 'firefox-dev', 'install' ]
+
 - name: download and unpack firefox dev
   unarchive:
-    dest: /opt/firefox-dev.tar.bz2
+    dest: ~/.local/opt/
     src: https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US
     remote_src: yes
   tags: ['firefox-dev', 'install']
 
+
+
+- name: Create a symbolic link
+  file:
+    src: ~/.local/opt/firefox/firefox
+    dest: ~/.local/bin/firefox-dev
+    state: link
+  tags: [ 'firefox-dev', 'install' ]
+
+
+- name: update desktop database
+  tags: [ 'firefox-dev', 'install' ]
+  raw: update-desktop-database ~/.local/share/applications/
+
+- name: zsh config
+  copy:
+    src: zshrc
+    dest: ~/.zshrc
+  tags: [ 'zsh', 'install' ]
+
+
+
+# sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+# git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+# ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+# git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $ZSH_CUSTOM/plugins/you-should-use
 
 # nodejs
 # pulseefects
@@ -125,11 +162,11 @@
 # virtualbox
 # rescuetime
 # git config
-# zsh config+spaceship
 # webstorm config?
 # shortcuts keyboard
 # firefox sync
 # vpn
 # rsync
+# slack
 
 

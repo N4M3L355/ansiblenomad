@@ -14,8 +14,8 @@ StartupWMClass=Firefox Developer Edition
 
 [Desktop Action new-window]
 Name=Open a New Window
-Exec=/home/egdoc/.local/bin/firefox-dev %u
+Exec=/home/undefined/.local/bin/firefox-dev %u
 
 [Desktop Action new-private-window]
 Name=Open a New Private Window
-Exec=/home/egdoc/.local/bin/firefox-dev --private-window %u
+Exec=/home/undefined/.local/bin/firefox-dev --private-window %u
