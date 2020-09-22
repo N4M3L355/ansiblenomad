@@ -103,10 +103,13 @@
 - name: workspace not only on primary
   raw: gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
 
+- name: copy firefox desktop entry
+  copy:
+    src: firefox-dev.desktop
+    dest: ~/.local/share/applications
+  tags: ['firefox-dev', 'install']
 
 
-
-# firefox dev
 # nodejs
 # pulseefects
 # flatpak
