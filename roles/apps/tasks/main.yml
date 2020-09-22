@@ -110,6 +110,14 @@
   tags: ['firefox-dev', 'install']
 
 
+- name: download and unpack firefox dev
+  unarchive:
+    dest: /opt/firefox-dev.tar.bz2
+    src: https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US
+    remote_src: yes
+  tags: ['firefox-dev', 'install']
+
+
 # nodejs
 # pulseefects
 # flatpak
